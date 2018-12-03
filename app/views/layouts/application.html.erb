@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>MetroSite</title>
+    <%= csrf_meta_tags %>
+
+    <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+    <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
+  </head>
+
+  <body>
+    <div>
+      <table style="width:100%">
+        <tr>
+          <th> <%= link_to('Home Page', '/home_page/index',{}) %> </th>
+          <th> <%= link_to('Students', students_url,{}) %> </th>
+          <th> <%= link_to('Sections', sections_url,{}) %> </th>
+          <th> <%= link_to('Courses', courses_url,{}) %> </th>
+          <th> <%= link_to('Enrollments', enrollments_url,{}) %> </th>
+          <!-- This code slightly modified from the official devise wiki -->
+          <% if user_signed_in? %>
+            <th>
+              <%= link_to('logout', destroy_user_session_path, method: :delete) %>
+            </th>
+          <% else %>
+            <th>
+              <%= link_to('login', new_user_session_path)  %>
+            </th>
+          <% end %>
+        </tr>
+      </table>
+    </div>
+
+    <%= yield %>
+  </body>
+</html>

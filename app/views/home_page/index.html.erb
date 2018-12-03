@@ -1,0 +1,39 @@
+<button onclick="studentJSONCollection()">Collect Students</button>
+<button onclick="courseJSONCollection()" >Collect Courses</button>
+
+<div>
+  <textarea id="collectionArea" cols="60">
+  </textarea>
+</div>
+
+<script>
+    var studentURL = 'http://'+window.location.host+'/students.json';
+    var courseURL  = 'http://'+window.location.host+'/courses.json';
+    var area = document.getElementById("collectionArea");
+
+    var JSONRequest = new XMLHttpRequest();
+    JSONRequest.onreadystatechange = function(){
+        if(JSONRequest.readyState === 4 && JSONRequest.status === 200){
+            area.value = ""; //clear text area
+            console.log(JSONRequest.responseText);
+            let responseObject = JSON.parse(JSONRequest.responseText);
+            let size = Object.keys(responseObject).length;
+            for(i in responseObject) {
+                area.value += responseObject[i]["name"] + "\n";
+            }
+            area.rows = size; //resize
+        }
+    }
+
+    var studentJSONCollection = function(){
+        console.log("requesting student collection @ "+studentURL);
+        JSONRequest.open("GET",studentURL,true);
+        JSONRequest.send(null);
+    }
+
+    var courseJSONCollection = function(){
+        console.log("requesting course collection @ "+courseURL);
+        JSONRequest.open("GET",courseURL,true);
+        JSONRequest.send(null);
+    }
+</script>
